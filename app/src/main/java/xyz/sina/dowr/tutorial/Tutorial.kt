@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDirection
-import xyz.sina.dowr.utils.Texts
+
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -18,15 +18,12 @@ fun Tutorial(){
 
 
     val texts = listOf{
-        Texts.gameName
-        Texts.tutorialFirst
-        Texts.about
     }
     Box(){
 
         val pagerStatus = rememberPagerState (initialPage = 0) {texts.size}
         HorizontalPager(state = pagerStatus, key = {texts[it]}) {index->
-            TextScreens(text = index)
+            TextScreens(text = index.toString())
         }
     }
 
