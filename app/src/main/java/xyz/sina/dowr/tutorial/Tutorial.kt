@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -29,7 +30,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import xyz.sina.dowr.R
@@ -38,9 +38,10 @@ import xyz.sina.dowr.utils.Txts
 
 
 @OptIn(ExperimentalFoundationApi::class)
-@Preview
 @Composable
-fun Tutorial(){
+fun Tutorial(
+    //onNavigateToMain : () -> Unit
+){
 
 
 
@@ -66,21 +67,24 @@ fun Tutorial(){
             Column (Modifier.padding(bottom = 12.dp)){
 
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Absolute.Right){
-                    Text(title[it], style = TextStyle(textDirection = TextDirection.Rtl, ), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text(title[it], style = TextStyle(textDirection = TextDirection.Rtl ), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     Icon(painter = painterResource(id = icon[it]), contentDescription = null)
                 }
-
                 Text(texts[it], style = TextStyle(textDirection = TextDirection.Rtl), fontSize = 16.sp)
-
 
             }
         }
 
         Row(
             Modifier
-                .wrapContentHeight().align(Alignment.BottomCenter)
-                .fillMaxWidth()){
-            IconButton(onClick = { /*TODO*/ }) {
+                .wrapContentHeight()
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .alpha(if (pagerState.currentPage == pagerState.pageCount - 1) 1f else 0f)){
+            IconButton(
+                onClick = { //onNavigateToMain
+                    }
+            ) {
                 Icon(Icons.Default.CheckCircle, contentDescription = null)
             }
         }
@@ -88,7 +92,8 @@ fun Tutorial(){
         Row(
             Modifier
                 .wrapContentHeight()
-                .fillMaxWidth().align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
                 .padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.Center){
             repeat(pagerState.pageCount){
@@ -102,11 +107,6 @@ fun Tutorial(){
 
             }
         }
-
-
-
     }
-
-    
 }
 

@@ -20,8 +20,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DowrTheme {
+
                 Tutorial()
             }
         }
     }
+}
+
+@Composable
+fun Main(onNavigateToTutorial: () -> Unit,
+//         onNavigateToInGame: () -> Unit
+){
+    Text("Should be start btn and other stuff")
+
 }
