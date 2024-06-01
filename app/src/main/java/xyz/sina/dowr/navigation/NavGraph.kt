@@ -9,6 +9,7 @@ import xyz.sina.dowr.Main
 import xyz.sina.dowr.tutorial.Tutorial
 
 
+// TODO : use sharedPreference for saving next startUp screen
 @Composable
 fun Navigation(){
     val navController : NavHostController = rememberNavController()
@@ -24,9 +25,3 @@ fun Navigation(){
     }
 }
 
-class NavigationTaskActions(private val navController: NavHostController){
-    fun navigateToMain(){
-
-
-    }
-}
