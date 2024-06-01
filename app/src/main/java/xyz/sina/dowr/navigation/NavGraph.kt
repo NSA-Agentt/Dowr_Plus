@@ -10,18 +10,16 @@ import xyz.sina.dowr.tutorial.Tutorial
 
 
 @Composable
-fun Navigation(navController : NavHostController = rememberNavController()){
-
-    NavHost(navController = navController, startDestination = Screens.ScreenMain.route){
+fun Navigation(){
+    val navController : NavHostController = rememberNavController()
+    NavHost(navController = navController, startDestination = Screens.ScreenTutorial.route){
         composable(Screens.ScreenMain.route){
 
-            Main(onNavigateToTutorial = {navController.navigate(route = Screens.ScreenTutorial.route)})
+            Main(navController)
 
         }
         composable(Screens.ScreenTutorial.route){
-            Tutorial(
-                //onNavigateToMain = {navController.navigate(route = Screens.ScreenMain.route )}
-            )
+            Tutorial(navController)
         }
     }
 }

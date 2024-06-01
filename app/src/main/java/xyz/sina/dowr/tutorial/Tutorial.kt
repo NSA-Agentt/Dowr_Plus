@@ -2,6 +2,7 @@ package xyz.sina.dowr.tutorial
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,16 +34,16 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import xyz.sina.dowr.R
+import xyz.sina.dowr.navigation.Screens
 import xyz.sina.dowr.utils.Title
 import xyz.sina.dowr.utils.Txts
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Tutorial(
-    //onNavigateToMain : () -> Unit
-){
+fun Tutorial(navController: NavHostController){
 
 
 
@@ -56,57 +58,64 @@ fun Tutorial(
     )
     // TODO: please add the game icon and punishment icon
     val icon = listOf(R.drawable.ic_rule ,R.drawable.ic_rule, R.drawable.ic_rule)
+    Column{
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp), ){
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(24.dp), ){
+            val pagerState = rememberPagerState (pageCount = {3})
 
-        val pagerState = rememberPagerState (pageCount = {3})
+            HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize() , verticalAlignment = Alignment.CenterVertically) {
+                Column (Modifier.padding(bottom = 12.dp)){
 
-        HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize() , verticalAlignment = Alignment.CenterVertically) {
-            Column (Modifier.padding(bottom = 12.dp)){
-
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Absolute.Right){
-                    Text(title[it], style = TextStyle(textDirection = TextDirection.Rtl ), fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Icon(painter = painterResource(id = icon[it]), contentDescription = null)
-                }
-                Text(texts[it], style = TextStyle(textDirection = TextDirection.Rtl), fontSize = 16.sp)
-
-            }
-        }
-
-        Row(
-            Modifier
-                .wrapContentHeight()
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .alpha(if (pagerState.currentPage == pagerState.pageCount - 1) 1f else 0f)){
-            IconButton(
-                onClick = { //onNavigateToMain
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Absolute.Right){
+                        Text(title[it], style = TextStyle(textDirection = TextDirection.Rtl ), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                        Icon(painter = painterResource(id = icon[it]), contentDescription = null)
                     }
-            ) {
-                Icon(Icons.Default.CheckCircle, contentDescription = null)
+                    Text(texts[it], style = TextStyle(textDirection = TextDirection.Rtl), fontSize = 16.sp)
+
+                }
             }
-        }
+            Column(Modifier.align(Alignment.BottomCenter)) {
+                Row(
+                    Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .alpha(if (pagerState.currentPage == pagerState.pageCount - 1) 1f else 0f)
+                ){
+                    Text(Txts.changeStartUpScreen)
+                    RadioButton(selected = false, onClick = {  })
+                }
+                Row(Modifier.fillMaxWidth().wrapContentHeight()){
+                    Row(
+                        Modifier.alpha(if (pagerState.currentPage == pagerState.pageCount - 1) 1f else 0f), horizontalArrangement = Arrangement.Start){
+                        IconButton(onClick =  {navController.navigate(Screens.ScreenMain.route)}) {
+                            Icon(Icons.Default.CheckCircle, contentDescription = null)
+                        }
+                    }
 
-        Row(
-            Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.Center){
-            repeat(pagerState.pageCount){
+                    Row(
+                        Modifier
 
-                val color = if(pagerState.currentPage == it ) Color.Red else Color.LightGray
-                Box(modifier = Modifier
-                    .padding(2.dp)
-                    .clip(CircleShape)
-                    .background(color)
-                    .size(16.dp))
+                            .padding(bottom = 8.dp),
+                        horizontalArrangement = Arrangement.Center){
+                        repeat(pagerState.pageCount){
 
+                            val color = if(pagerState.currentPage == it ) Color.Red else Color.LightGray
+                            Box(modifier = Modifier
+                                .padding(2.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                                .size(16.dp))
+
+                        }
+                    }
+                }
             }
+
+
         }
     }
+
 }
 

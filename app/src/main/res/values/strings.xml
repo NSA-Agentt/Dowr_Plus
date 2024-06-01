@@ -2,4 +2,5 @@
     <string name="app_name">Dowr +</string>
     <integer name="title_font_size">20</integer>
     <integer name="default_font_size">16</integer>
+    <string name="title_activity_tutorial_screens">TutorialScreens</string>
 </resources>
