@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,13 +16,19 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -58,17 +65,28 @@ fun Tutorial(navController: NavHostController){
     )
     // TODO: please add the game icon and punishment icon
     val icon = listOf(R.drawable.ic_rule ,R.drawable.ic_rule, R.drawable.ic_rule)
-    Column{
+    
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(color = Color(252, 191, 73))){
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp), ){
+            .padding(24.dp) ){
 
             val pagerState = rememberPagerState (pageCount = {3})
 
-            HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize() , verticalAlignment = Alignment.CenterVertically) {
-                Column (Modifier.padding(bottom = 12.dp)){
+            HorizontalPager(state = pagerState, beyondBoundsPageCount = pagerState.pageCount, modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(14.dp))
+                .wrapContentHeight()
+                .background(color = Color(red = 247, green = 127, blue = 0)) , verticalAlignment = Alignment.CenterVertically) {
+                Column (Modifier.padding(16.dp)){
 
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Absolute.Right){
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.End), horizontalArrangement = Arrangement.Absolute.Right){
                         Text(title[it], style = TextStyle(textDirection = TextDirection.Rtl ), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                         Icon(painter = painterResource(id = icon[it]), contentDescription = null)
                     }
@@ -79,41 +97,39 @@ fun Tutorial(navController: NavHostController){
             Column(Modifier.align(Alignment.BottomCenter)) {
                 Row(
                     Modifier
-                        .wrapContentHeight()
                         .fillMaxWidth()
                         .alpha(if (pagerState.currentPage == pagerState.pageCount - 1) 1f else 0f)
                 ){
-                    Text(Txts.changeStartUpScreen)
-                    RadioButton(selected = false, onClick = {  })
+                    var checked by remember{ mutableStateOf(false) }
+
+                    Text(modifier = Modifier.absolutePadding(right = 20.dp),text = Txts.changeStartUpScreen, style = TextStyle(textDirection = TextDirection.Rtl))
+                    Checkbox(checked = checked, onCheckedChange = { checked = it })
+
                 }
-                Row(Modifier.fillMaxWidth().wrapContentHeight()){
-                    Row(
-                        Modifier.alpha(if (pagerState.currentPage == pagerState.pageCount - 1) 1f else 0f), horizontalArrangement = Arrangement.Start){
-                        IconButton(onClick =  {navController.navigate(Screens.ScreenMain.route)}) {
-                            Icon(Icons.Default.CheckCircle, contentDescription = null)
+                Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Center){
+                    Column {
+                        Row(
+                            Modifier
+                                .padding(bottom = 8.dp)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center){
+                            repeat(pagerState.pageCount){
+
+                                val color = if(pagerState.currentPage == it ) Color.Black else Color.White
+                                Box(modifier = Modifier
+                                    .padding(2.dp)
+                                    .clip(CircleShape)
+                                    .background(color)
+                                    .size(16.dp))
+
+                            }
                         }
-                    }
-
-                    Row(
-                        Modifier
-
-                            .padding(bottom = 8.dp),
-                        horizontalArrangement = Arrangement.Center){
-                        repeat(pagerState.pageCount){
-
-                            val color = if(pagerState.currentPage == it ) Color.Red else Color.LightGray
-                            Box(modifier = Modifier
-                                .padding(2.dp)
-                                .clip(CircleShape)
-                                .background(color)
-                                .size(16.dp))
-
+                        IconButton(modifier = Modifier.alpha(if(pagerState.currentPage != pagerState.pageCount -1) 0f else 1f ), onClick = {navController.navigate(Screens.ScreenMain.route)}){
+                            Icon(Icons.Default.CheckCircle, contentDescription = null)
                         }
                     }
                 }
             }
-
-
         }
     }
 
