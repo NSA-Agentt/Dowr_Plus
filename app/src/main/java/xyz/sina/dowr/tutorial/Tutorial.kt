@@ -78,7 +78,6 @@ fun Tutorial(navController: NavHostController){
 
             HorizontalPager(state = pagerState, beyondBoundsPageCount = pagerState.pageCount, modifier = Modifier
                 .fillMaxSize()
-                .clip(RoundedCornerShape(14.dp))
                 .wrapContentHeight()
                 .background(color = Color(red = 247, green = 127, blue = 0)) , verticalAlignment = Alignment.CenterVertically) {
                 Column (Modifier.padding(16.dp)){
