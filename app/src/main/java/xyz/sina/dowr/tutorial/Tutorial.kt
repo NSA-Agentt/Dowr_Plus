@@ -44,6 +44,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import xyz.sina.dowr.R
 import xyz.sina.dowr.navigation.Screens
+import xyz.sina.dowr.ui.theme.Caramel
+import xyz.sina.dowr.ui.theme.Orange
 import xyz.sina.dowr.utils.Title
 import xyz.sina.dowr.utils.Txts
 
@@ -69,7 +71,7 @@ fun Tutorial(navController: NavHostController){
     Column(
         Modifier
             .fillMaxSize()
-            .background(color = Color(252, 191, 73))){
+            .background(color = Caramel)){
         Box(modifier = Modifier
             .fillMaxSize()
             .padding(24.dp) ){
@@ -79,7 +81,7 @@ fun Tutorial(navController: NavHostController){
             HorizontalPager(state = pagerState, beyondBoundsPageCount = pagerState.pageCount, modifier = Modifier
                 .fillMaxSize()
                 .wrapContentHeight()
-                .background(color = Color(red = 247, green = 127, blue = 0)) , verticalAlignment = Alignment.CenterVertically) {
+                .background(color = Orange) , verticalAlignment = Alignment.CenterVertically) {
                 Column (Modifier.padding(16.dp)){
 
                     Row(
