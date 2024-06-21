@@ -38,7 +38,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import xyz.sina.dowr.alertDialog.Dialog
+import xyz.sina.dowr.alertDialog.FirstDialog
 import xyz.sina.dowr.navigation.Navigation
 import xyz.sina.dowr.navigation.Screens
 import xyz.sina.dowr.ui.theme.DowrTheme
@@ -67,7 +67,10 @@ fun Main(navController: NavHostController) {
     // TODO PLEASE ADD ICONS FOR GAME AND HELP
 
     var showDialog by remember{ mutableStateOf(false) }
-    if(showDialog) Dialog(onDismiss = {showDialog = false},navController = navController)
+
+
+    if(showDialog) FirstDialog(onDismiss = {showDialog = false},navController = navController)
+
 
     val items = listOf(
         BottomNavigationItems(
@@ -118,9 +121,7 @@ fun Main(navController: NavHostController) {
             // gif or image of app
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
                 IconButton(onClick = {
-
                     showDialog = true
-
                 }) {
                     Icon(painter = painterResource(id = R.drawable.play_circle_24), contentDescription = null)
                 }
