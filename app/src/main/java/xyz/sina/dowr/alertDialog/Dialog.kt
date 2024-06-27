@@ -14,10 +14,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDirection
 import androidx.navigation.NavHostController
 import xyz.sina.dowr.navigation.Screens
-
+import xyz.sina.dowr.utils.DialogTexts
+import xyz.sina.dowr.utils.General
+import xyz.sina.dowr.utils.Txts
 
 
 @Composable
@@ -30,12 +34,12 @@ fun FirstDialog(onDismiss:() -> Unit,navController: NavHostController){
     AlertDialog(onDismissRequest = onDismiss, confirmButton = {  },
         text = {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                OutlinedTextField(value = numberOfPersons, onValueChange = { numberOfPersons  = it }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),label = {Text("Number of Players")})
+                Text(text = DialogTexts.numberOfPlayers)
+                OutlinedTextField(value = numberOfPersons, onValueChange = { numberOfPersons  = it }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
                 Button(onClick = {
                     showDialogSecond = true
-                    //navController.navigate(Screens.ScreenInGame.route)
                 }){
-                    Text(text = "Next")
+                    Text(text = General.next )
                 }
             }
         }
@@ -47,19 +51,24 @@ fun SecondDialog(onDismiss: () -> Unit,navController: NavHostController,numberOf
     AlertDialog(onDismissRequest = onDismiss, confirmButton = {},
         text = {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Text("Please enter your players name ")
+                Text(text = DialogTexts.nameOfPlayers)
                 playerNames.forEachIndexed { index, name ->
-                    OutlinedTextField(value = name , onValueChange = {newName ->
+                    OutlinedTextField(value = name ,
+                        onValueChange = { newName ->
                         playerNames = playerNames.toMutableList().also { it[index] = newName }
-                    }, label = {Text("Player ${index+1}")})
+                    }, label = {Text("بازیکن ${index+1}")},
+                        textStyle = TextStyle(textDirection = TextDirection.Content))
                 }
                 Button(onClick = {
                     navController.navigate(Screens.ScreenInGame.route)
                 }){
-                    Text(text = "Going to the InGame Screen")
+                    Text(text = General.start)
                 }
 
             }
 
         })
 }
+
+
+// TODO Please add third dialog for inGame setting.

@@ -11,7 +11,15 @@ object Txts {
     val thirdPageTutorial : String = "در آخر هم برای این که به بازی\u200Cتون هیجان بیشتری بدید می\u200Cتونید یه مجازات تعیین کنید و گروه بازنده رو خوشحال کنید."
     val changeStartUpScreen : String = "دفعه بعد این صفحات نشون داده بشه ؟ (با علامت ؟ می\u200Cتونید دوباره آموزش بازی رو مشاهده کنید)"
 }
+object General{
+    val next : String = "بعدی"
+    val start: String = "شروع"
+}
+object DialogTexts{
+    val numberOfPlayers : String = "لطفا تعداد بازیکن ها را وارد کنید"
+    val nameOfPlayers : String = "لطفا اسم بازیکن ها را وارد کنید"
 
+}
 object Title{
     val firstPageTitle : String = "معرفی"
     val secondPageTitle : String =  "آمورش بازی"
